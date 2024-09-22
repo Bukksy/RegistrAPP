@@ -1,0 +1,53 @@
+#container {
+  margin: 170px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+#tituloMain{
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 25px;
+  text-align: center;
+}
+
+
+.titulos{
+  text-align: center;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 40px;
+  color: orange;
+  text-shadow: 1px 1px 10px rgb(26, 61, 218);
+}
+
+#logo{
+  width: 100px;
+  justify-content: center;
+
+  filter: drop-shadow(1px 1px 5px orange);
+}
+
+h1{
+  text-align: center;
+  margin: 0 auto;
+  text-decoration:line-through orange;
+
+  text-shadow: 1px 1px 5px rgb(9, 41, 182);
+
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#formulario{
+  border: 1px solid orange;  
+  border-radius: 20px;
+  padding: 20px;
+  width: 400px;
+  height: 400px;
+  text-align: center;
+
+  box-shadow: 1px 1px 10px rgb(9, 41, 182);
+}
+
+.lol{
+  cursor: pointer;
+}

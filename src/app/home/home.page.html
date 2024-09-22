@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title id="tituloMain">
+      {{ tituloMain }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header class="ion-text-center ion-no-border">
+  </ion-header>
+
+<br>
+
+  <div id="container">
+    <div id="formulario">
+      <ion-title class="titulos">Bienvenidos</ion-title>
+      <br>
+      <h1>LOGIN</h1>
+      <ion-input [(ngModel)]="username" label="Usuario" label-placement="floating" fill="outline" placeholder="Ingrese su usuario"></ion-input>
+      <br>
+      <ion-input type="password" [(ngModel)]="password" label="Password" label-placement="floating" fill="outline" placeholder="Ingrese su contraseña"></ion-input>
+      <br>
+      <ion-button (click)="validateLogin()" expand="block" color="warning" fill="outline">Ingresar</ion-button>
+      <br>
+      <a class="lol" (click)="recuperarPassword()">¿Olvidaste tu contraseña?</a>
+    </div>  
+  </div>
+</ion-content>
