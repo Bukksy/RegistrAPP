@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Animation, AnimationController } from '@ionic/angular';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-profesores',
@@ -48,6 +49,17 @@ export class ProfesoresPage implements OnInit {
     } else {
       console.log('Error en la animacion')
     }
+  }
+
+  async showAttendance() {
+    const currentTime = formatDate(new Date(), 'shortTime', 'en-US');
+    const alert = await this.alertController.create({
+      header: 'Tomar Asistencia',
+      message: `Tomara asistencia a las: ${currentTime}`,
+      buttons: ['Generar QR'],
+    });
+
+    await alert.present();
   }
 
 }
