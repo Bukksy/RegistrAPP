@@ -1,4 +1,4 @@
-<ion-menu side="end" contentId="main-content">
+<ion-menu menuId="first-menu" side="end" contentId="main-content">
   <ion-header>
     <ion-toolbar>
       <ion-title>¡Hola <strong>{{username}}</strong>!</ion-title>
@@ -58,9 +58,17 @@
   </ion-header>
 
   <div id="container">
-    <ion-title id="bienvenida" class="ion-text-center">Bienvenido nuevamente: <strong>{{username}}</strong> 
-      <p class="ion-text-center">Seleccione una asignatura:</p>
-    </ion-title>
-
+    <ion-title id="bienvenida" class="ion-text-center">¡Bienvenido nuevamente a RegistrAPP!</ion-title>
+    <br>
+    <div class="bienvenida" id="contenedor">
+      <div id="contenedor-hijo">
+        <ion-img id="imagen-profile" src="assets/img/pngegg (2).png" alt="Logo duoc"></ion-img>
+        <br>
+        <ion-title class="ion-text-center"><strong class="uppercase-text">{{username}}</strong>
+          <p>{{carrera}}</p>
+          <ion-button (click)="openFirstMenu()" shape="round">Menu ➤</ion-button>
+        </ion-title>
+      </div>
+    </div>
   </div>
 </ion-content>

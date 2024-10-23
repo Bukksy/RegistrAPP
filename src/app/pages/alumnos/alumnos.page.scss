@@ -25,3 +25,34 @@ p{
 a {
   text-decoration: none;
 }
+
+#imagen-logo{
+  width: 150px;
+  margin-left: 120px;
+  opacity:calc(0.3);
+}
+
+#imagen-profile{
+  width: 130px;
+  margin-left: 50px;
+  margin-top: 50px;
+  opacity:calc(0.3);
+}
+
+#contenedor{
+  box-shadow: 1px 1px 10px black;
+  border-radius: 20px;
+  height: 400px;
+
+  padding: 10px;
+}
+
+.uppercase-text {
+  text-transform: uppercase;
+}
+
+#contenedor-hijo{
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}

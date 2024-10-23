@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Animation, AnimationController } from '@ionic/angular';
-import { formatDate } from '@angular/common';
+import { MenuController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-alumnos',
@@ -12,17 +13,29 @@ import { formatDate } from '@angular/common';
 export class AlumnosPage implements OnInit {
 
   username: string = 'Invitado';
+  carrera: string = 'Ingenieria en Informatica';
   
   constructor(
     private router: Router,
     private alertController: AlertController,
-    private animationCtrl: AnimationController
+    private animationCtrl: AnimationController,
+    private menuCtrl: MenuController
   ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if(state){
-      console.log(`Username: ${state['user']}`)
-      this.username = state['user']
+      console.log(`Username: ${state['user']}`);
+      this.username = state['user'] || 'Usuario no especificado';
+      this.carrera = state['carrera'] || 'Carrera no especificada';
     }
+  }
+
+  openFirstMenu() {
+    /**
+     * Open the menu by menu-id
+     * We refer to the menu using an ID
+     * because multiple "start" menus exist.
+     */
+    this.menuCtrl.open('first-menu');
   }
 
   ngOnInit() {
@@ -36,6 +49,7 @@ export class AlumnosPage implements OnInit {
 
   ngAfterViewInit() {
     const bienvenida = document.querySelector('#bienvenida');
+    const bienvenida2 = document.querySelector('.bienvenida');
   
     if (bienvenida) {
       const animationbienvenida: Animation = this.animationCtrl.create()
@@ -49,16 +63,18 @@ export class AlumnosPage implements OnInit {
     } else {
       console.log('Error en la animacion')
     }
-  }
 
-  async showAttendance() {
-    const currentTime = formatDate(new Date(), 'shortTime', 'en-US');
-    const alert = await this.alertController.create({
-      header: 'Registrar Asistencia',
-      message: `La asistencia sera registrada a las: ${currentTime}`,
-      buttons: ['Escanear QR'],
-    });
-
-    await alert.present();
+    if (bienvenida2) {
+      const animationbienvenida: Animation = this.animationCtrl.create()
+        .addElement(bienvenida2)
+        .duration(1000)
+        .easing('ease-in-out')
+        .fromTo('opacity', '0', '1')
+        .fromTo('transform', 'translateY(50px)', 'translateY(0px)');
+  
+      animationbienvenida.play();
+    } else {
+      console.log('Error en la animacion')
+    }
   }
 }

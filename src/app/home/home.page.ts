@@ -4,29 +4,26 @@ import { LoginService } from '../services/login.service';
 import { ToastController } from '@ionic/angular';
 import { Animation, AnimationController } from '@ionic/angular';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
   username: string = '';
   password: string = '';
   welcomeMessage: string;
 
   tituloMain: string;
 
-  constructor
-  (
+  constructor(
     private router: Router, 
     private toastController: ToastController,
     private loginService: LoginService,
     private animationCtrl: AnimationController
   ) {
-    this.tituloMain= 'RegistrAPP'
-    this.welcomeMessage= 'Bienvenido'
+    this.tituloMain = 'RegistrAPP';
+    this.welcomeMessage = 'Bienvenido';
   }
 
   ngAfterViewInit() {
@@ -42,20 +39,22 @@ export class HomePage {
   
       animationFormulario.play();
     } else {
-      console.log('Error en la animacion')
+      console.log('Error en la animación');
     }
   }
 
   validateLogin() {
     console.log("Ejecutando validación!");
 
+    // Cambiar aquí para obtener el resultado de validación, incluida la carrera
     const loginResult = this.loginService.validateLogin(this.username, this.password);
 
-    if (loginResult) {
+    if (loginResult.valid) { // Verifica si el inicio de sesión es válido
       this.showToastMessage('Inicio de sesión válido', 'success');
       this.welcomeMessage = `Bienvenido ${this.username}`;
 
-      const extras = this.createExtrasUser(this.username);
+      // Cambiar para pasar la carrera en los extras de navegación
+      const extras = this.createExtrasUser(this.username, loginResult.carrera);
 
       if (this.isAlumno()) {
         this.router.navigate(['/alumnos'], extras);
@@ -72,28 +71,27 @@ export class HomePage {
     return this.loginService.users.some(user => user.username === this.username);
   }
 
-  createExtrasUser(u: string): NavigationExtras | undefined {
+  createExtrasUser(u: string, carrera?: string): NavigationExtras | undefined {
     return {
       state: {
-        user: u
+        user: u,
+        carrera: carrera // Incluye la carrera aquí
       }
-    }
+    };
   }
 
-  recuperarPassword(){
-    console.log("Ejecutando Recuperacion");
-    this.router.navigate(['/forget'])
+  recuperarPassword() {
+    console.log("Ejecutando Recuperación");
+    this.router.navigate(['/forget']);
   }
-  
 
-
-  async showToastMessage(text: string, msgColor: string){
+  async showToastMessage(text: string, msgColor: string) {
     const toast = await this.toastController.create({
       message: text,
       color: msgColor,
       position: 'bottom',
       duration: 3000
-    })
+    });
     toast.present();
   }
 }
