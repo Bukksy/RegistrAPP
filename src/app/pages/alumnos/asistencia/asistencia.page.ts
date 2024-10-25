@@ -22,14 +22,4 @@ export class AsistenciaPage implements OnInit {
   isProfileActive(): boolean {
     return this.router.url === '/alumnos/asistencia';
   }
-
-  logout() {
-    this.router.navigate(['/home']); 
-  }
-
-  back(){
-    console.log('volviendo atras...')
-
-    this.navCtrl.navigateRoot('/alumnos');
-  }
-}
+}  

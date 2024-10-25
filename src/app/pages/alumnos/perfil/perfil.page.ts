@@ -22,15 +22,4 @@ export class PerfilPage implements OnInit {
   isProfileActive(): boolean {
     return this.router.url === '/alumnos/perfil';
   }
-
-  logout() {
-    this.router.navigate(['/home']); 
-  }
-
-  back(){
-    console.log('volviendo atras...')
-
-    this.navCtrl.navigateRoot('/alumnos');
-  }
-
 }

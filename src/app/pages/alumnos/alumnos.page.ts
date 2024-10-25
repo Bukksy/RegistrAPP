@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { Animation, AnimationController } from '@ionic/angular';
 import { MenuController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
+import { LoginService } from '../../services/login.service';
 
 
 @Component({
@@ -21,30 +22,27 @@ export class AlumnosPage implements OnInit {
     private alertController: AlertController,
     private animationCtrl: AnimationController,
     private menuCtrl: MenuController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private loginService: LoginService
   ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if(state){
       console.log(`Username: ${state['user']}`);
       this.username = state['user'] || 'Usuario no especificado';
       this.carrera = state['carrera'] || 'Carrera no especificada';
+    } else {
+      if (!this.loginService.isAlumno() && !this.loginService.isProfesor()) {
+        this.router.navigate(['/home']);
+      }
     }
-  }
-
-  navigateTo(page: string) {
-    this.router.navigate([`alumnos/${page}`]);
-    }
-
-  openFirstMenu() {
-    this.menuCtrl.open('first-menu');
   }
 
   ngOnInit() {
   }
 
-  logoff() {
+  logout() {
     localStorage.removeItem('currentUser');
-    this.navCtrl.navigateRoot('/home');
+    this.router.navigate(['/home']);
   }
 
   ngAfterViewInit() {

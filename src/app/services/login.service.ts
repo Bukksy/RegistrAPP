@@ -66,4 +66,15 @@ export class LoginService {
     }
     return { valid: false };
   }
+
+  isAlumno(): boolean {
+    const currentUser = localStorage.getItem('currentUser');
+    return currentUser !== null;
+  }
+
+  // Método para verificar si el usuario actual es un profesor
+  isProfesor(): boolean {
+    const currentUser2 = localStorage.getItem('currentUser2');
+    return currentUser2 !== null;
+  }
 }

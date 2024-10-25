@@ -8,15 +8,19 @@ const routes: Routes = [
     component: AlumnosPage,
     children: [
       {
+        path: 'inicio',  // Nueva ruta para el tab "Inicio"
+        loadChildren: () => import('./alumnos.module').then(m => m.AlumnosPageModule) // Asumiendo que la lógica de alumnos está aquí
+      },
+      {
         path: 'perfil-alumno',
         loadChildren: () => import('./perfil/perfil.module').then(m => m.PerfilPageModule)
       },
       {
-        path: 'ver-asignaturas',
+        path: 'asignaturas',
         loadChildren: () => import('./asignaturas/asignaturas.module').then(m => m.AsignaturasPageModule)
       },
       {
-        path: 'registrar-asistencia',
+        path: 'asistencia',
         loadChildren: () => import('./asistencia/asistencia.module').then(m => m.AsistenciaPageModule)
       },
       {

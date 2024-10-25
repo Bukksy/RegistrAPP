@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -14,10 +15,14 @@ const routes: Routes = [
   {
     path: 'profesores',
     loadChildren: () => import('./pages/profesores/profesores.module').then(m => m.ProfesoresPageModule), 
+    canActivate: [AuthGuard],
+    data: { userType: 'profesor' }
   },
   {
     path: 'alumnos',
     loadChildren: () => import('./pages/alumnos/alumnos.module').then(m => m.AlumnosPageModule), 
+    canActivate: [AuthGuard],
+    data: { userType: 'alumno' }
   },
   {
     path: 'forget',
@@ -26,14 +31,20 @@ const routes: Routes = [
   {
     path: 'alumnos/perfil',
     loadChildren: () => import('./pages/alumnos/perfil/perfil.module').then(m => m.PerfilPageModule), 
+    canActivate: [AuthGuard],
+    data: { userType: 'alumno' }
   },
   {
     path: 'alumnos/asignaturas',
     loadChildren: () => import('./pages/alumnos/asignaturas/asignaturas.module').then(m => m.AsignaturasPageModule), 
+    canActivate: [AuthGuard],
+    data: { userType: 'alumno' }
   },
   {
     path: 'alumnos/asistencia',
     loadChildren: () => import('./pages/alumnos/asistencia/asistencia.module').then(m => m.AsistenciaPageModule), 
+    canActivate: [AuthGuard],
+    data: { userType: 'alumno' }
   },
   {
     path: '404',
