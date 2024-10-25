@@ -6,7 +6,7 @@
   </ion-header>
   <ion-content class="ion-padding" id="menu-main">
     <ion-list>
-      <ion-item [ngClass]="{'item-active': isProfileActive()}"><ion-icon size="large" aria-hidden="true" slot="start" name="person-circle-outline"></ion-icon>⋮• Perfil •⋮</ion-item>
+      <ion-item><ion-icon size="large" aria-hidden="true" slot="start" name="person-circle-outline"></ion-icon>⋮• Perfil •⋮</ion-item>
       <ion-item routerLink="/alumnos/asignaturas"><ion-icon size="large" aria-hidden="true" slot="start" name="school-outline"></ion-icon>Asignaturas</ion-item>
       <ion-item routerLink="/alumnos/asistencia"><ion-icon size="large" aria-hidden="true" slot="start" name="book-outline"></ion-icon>Asistencia</ion-item>
     </ion-list>
@@ -14,7 +14,7 @@
   <ion-footer>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button> ← Volver Atrás</ion-button>
+        <ion-button routerLink="/alumnos"> ← Volver Atrás</ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
         <ion-button fill="outline" shape="round">Logoff</ion-button>
