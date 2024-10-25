@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { RedirectCommand, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-asistencia',
@@ -7,9 +10,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AsistenciaPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private navCtrl: NavController,
+    private menuCtrl: MenuController
+  ) { }
 
   ngOnInit() {
   }
 
+  isProfileActive(): boolean {
+    return this.router.url === '/alumnos/asistencia';
+  }
+
+  logout() {
+    this.router.navigate(['/home']); 
+  }
+
+  back(){
+    console.log('volviendo atras...')
+
+    this.navCtrl.navigateRoot('/alumnos');
+  }
 }

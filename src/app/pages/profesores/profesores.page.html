@@ -1,80 +1,59 @@
 <ion-menu menuId="first-menu" side="end" contentId="main-content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>¡Hola <strong>{{username}}</strong>!</ion-title>
+      <ion-title>¡Bienvenido {{username}}!</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding" id="menu-main">
     <ion-list>
-      <a href="#">
-        <ion-item>
-          <ion-icon size="large" aria-hidden="true" slot="start" name="person-circle-outline"></ion-icon>
-          <ion-label>Perfil</ion-label>
-        </ion-item>
-      </a>
-      <a href="#">
-        <ion-item>
-          <ion-icon size="large" aria-hidden="true" slot="start" name="person-circle-outline"></ion-icon>
-          <ion-label>Asignaturas</ion-label>
-        </ion-item>
-      </a>
-      <a href="#">
-        <ion-item>
-          <ion-icon size="large" aria-hidden="true" slot="start" name="person-circle-outline"></ion-icon>
-          <ion-label>Tomar asistencia</ion-label>
-        </ion-item>
-      </a>
+      <ion-item routerLink="/profesores">
+        <ion-icon size="large" aria-hidden="true" slot="start" name="person-circle-outline"></ion-icon>
+        Inicio
+      </ion-item>
     </ion-list>
   </ion-content>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button (click)="logoff()" fill="outline" shape="round">Logoff</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
 </ion-menu>
 
-<div class="ion-page" id="main-content">
+<ion-content [fullscreen]="true" id="main-content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu</ion-title>
+      <ion-title>RegistrAPP</ion-title>
       <ion-buttons slot="end">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding"> 
-  </ion-content>
-</div>
-
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>RegistrAPP</ion-title>
-    <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
+  
+  <div id="container" class="ion-padding">
     <ion-title id="bienvenida" class="ion-text-center">¡Bienvenido nuevamente a RegistrAPP!</ion-title>
     <br>
     <div class="bienvenida" id="contenedor">
       <div id="contenedor-hijo">
-        <ion-img id="imagen-profile" src="assets/img/pngegg (2).png" alt="Logo duoc"></ion-img>
+        <div class="imagenes"><ion-img id="imagen-profile" src="assets/img/pngegg (2).png" alt="Logo duoc"></ion-img></div>
         <br>
-        <ion-title class="ion-text-center"><strong class="uppercase-text">{{username}}</strong>
-          <br>
-          <ion-button (click)="openFirstMenu()" shape="round">Menu ➤</ion-button>
-        </ion-title>
+        <ion-title class="ion-text-center"><strong class="uppercase-text">{{username}}</strong></ion-title>
+        <br>
+        <ion-list>
+          <ion-item>
+            <ion-select (ionChange)="mostrarBotones($event.detail.value)" label="Seleccione una clase" aria-label="clases" placeholder="Clases">
+              <ion-select-option *ngFor="let asignatura of asignaturas" [value]="asignatura">
+                {{ asignatura.name }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="opcion-seleccionada" *ngIf="opcionSeleccionada">
+            <h3>Clase Seleccionada:</h3>
+            <p>{{ opcionSeleccionada.content }}</p>
+            <ion-button (click)="confirmarAsistencia()">Generar QR</ion-button>
+          </div>
+        </ion-list>
       </div>
     </div>
   </div>

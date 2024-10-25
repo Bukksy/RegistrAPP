@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
-import { profesores } from '../models/user';
+import { Profesores } from '../models/user';
+import { Asignatura } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -8,57 +9,61 @@ import { profesores } from '../models/user';
 export class LoginService {
 
   users: User[] = [
-    {
-      username: "alumno",
-      password: "12345",
-      carrera: "Ingenieria en informatica"
+    { username: "alumno", password: "12345", carrera: "Ingeniería en informática", correo: "example@duoc.cl" },
+    { username: "alumno1", password: "12345", carrera: "Ingeniero en electrónica", correo: "example@duoc.cl" },
+    { username: "alumno2", password: "12345", carrera: "Ingeniero en mecánica", correo: "example@duoc.cl" }
+  ];
+
+  profesores: Profesores[] = [
+    { 
+      username: 'profesor', 
+      password: '12345', 
+      correo: "example@duoc.cl", 
+      asignaturas: [ 
+        { name: 'C. Software', button: 'Generar QR', content: 'QR para C. Software' },
+        { name: 'Arquitectura', button: 'Generar QR', content: 'QR para Arquitectura' },
+        { name: 'Programación', button: 'Generar QR', content: 'QR para Programación' }
+      ]
     },
-    {
-      username: "alumno1",
-      password: "12345",
-      carrera: "Ingenierio en electronica"
+    { 
+      username: 'profesor1', 
+      password: '12345', 
+      correo: "example@duoc.cl", 
+      asignaturas: [ 
+        { name: 'C. Software', button: 'Generar QR', content: 'QR para Arquitectura' },
+        { name: 'Arquitectura', button: 'Generar QR', content: 'QR para Portafolio' },
+        { name: 'Programación', button: 'Generar QR', content: 'QR para Ingeniería' }
+      ]
     },
-    {
-      username: "alumno2",
-      password: "12345",
-      carrera: "Ingenierio en mecanica"
+    { 
+      username: 'profesor2', 
+      password: '12345', 
+      correo: "example@duoc.cl", 
+      asignaturas: [ 
+        { name: 'Modelamiento', button: 'Generar QR', content: 'QR para Modelamiento' },
+        { name: 'BPM', button: 'Generar QR', content: 'QR para BPM' },
+        { name: 'Seguridad', button: 'Generar QR', content: 'QR para Seguridad' }
+      ]
     }
   ];
 
-  profesoress: profesores[] = [
-    {
-      username: 'profesor',
-      password: '1234',
-    },
-    {
-      username: 'profesor1',
-      password: '1234',
-    },
-    {
-      username: 'profesor2',
-      password: '1234',
-    }
-  ];
+  currentUser: { username: string; carrera?: string } | null = null;
+  currentUser2: { username: string; asignaturas?: Asignatura[] } | null = null;
 
   constructor() { }
 
-  validateLogin(u: string, p: string): {valid: boolean, carrera?: string} {
-    for (let alumnos = 0; alumnos < this.users.length; alumnos++) {
-      const user = this.users[alumnos];
-      if (user.username === u && user.password === p) {
-        console.log(`Alumno encontrado: ${u}`);
-        return { valid: true, carrera: user.carrera }; 
-      }
-    }
+  validateLogin(u: string, p: string): { valid: boolean, carrera?: string, asignaturas?: Asignatura[] } {
+    const user = this.users.find(user => user.username === u && user.password === p);
+    const profesor = this.profesores.find(prof => prof.username === u && prof.password === p);
 
-    for (let profesores = 0; profesores < this.profesoress.length; profesores++) {
-      const profesor = this.profesoress[profesores];
-      if (profesor.username === u && profesor.password === p) {
-        console.log(`Profesor encontrado: ${u}`);
-        return { valid: true };
-      }
+    if (user) {
+      localStorage.setItem('currentUser', JSON.stringify({ username: u, carrera: user.carrera }));
+      return { valid: true, carrera: user.carrera };
+    } else if (profesor) {
+      // Almacena la información correcta en el LocalStorage
+      localStorage.setItem('currentUser2', JSON.stringify({ username: u, asignaturas: profesor.asignaturas }));
+      return { valid: true, asignaturas: profesor.asignaturas };
     }
-    console.log(`Usuario no encontrado: ${u}`);
     return { valid: false };
   }
 }

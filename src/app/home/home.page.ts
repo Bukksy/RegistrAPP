@@ -12,8 +12,8 @@ import { Animation, AnimationController } from '@ionic/angular';
 export class HomePage {
   username: string = '';
   password: string = '';
+  carrera: string = '';
   welcomeMessage: string;
-
   tituloMain: string;
 
   constructor(
@@ -27,6 +27,10 @@ export class HomePage {
   }
 
   ngAfterViewInit() {
+    this.animateForm();
+  }
+
+  private animateForm() {
     const formulario = document.querySelector('#formulario');
   
     if (formulario) {
@@ -46,20 +50,24 @@ export class HomePage {
   validateLogin() {
     console.log("Ejecutando validación!");
 
-    // Cambiar aquí para obtener el resultado de validación, incluida la carrera
     const loginResult = this.loginService.validateLogin(this.username, this.password);
 
-    if (loginResult.valid) { // Verifica si el inicio de sesión es válido
+    if (loginResult.valid) { 
       this.showToastMessage('Inicio de sesión válido', 'success');
-      this.welcomeMessage = `Bienvenido ${this.username}`;
+      this.welcomeMessage = `Bienvenido ${this.username}`; 
 
-      // Cambiar para pasar la carrera en los extras de navegación
+      const userData = { username: this.username, carrera: loginResult.carrera };
+      localStorage.setItem('currentUser', JSON.stringify(userData));
+
       const extras = this.createExtrasUser(this.username, loginResult.carrera);
 
+      // Navegar según el tipo de usuario
       if (this.isAlumno()) {
         this.router.navigate(['/alumnos'], extras);
-      } else {
+      } else if (this.isProfesor()) {
         this.router.navigate(['/profesores'], extras);
+      } else {
+        this.showToastMessage('Tipo de usuario no reconocido', 'danger');
       }
 
     } else {
@@ -71,11 +79,16 @@ export class HomePage {
     return this.loginService.users.some(user => user.username === this.username);
   }
 
-  createExtrasUser(u: string, carrera?: string): NavigationExtras | undefined {
+  isProfesor(): boolean {
+    return this.loginService.profesores.some(user => user.username === this.username);
+  }
+
+  createExtrasUser(u: string, carrera?: string, asignaturas?: string[]): NavigationExtras | undefined {
     return {
       state: {
         user: u,
-        carrera: carrera // Incluye la carrera aquí
+        carrera: carrera,
+        asignaturas: asignaturas || []
       }
     };
   }
@@ -92,6 +105,6 @@ export class HomePage {
       position: 'bottom',
       duration: 3000
     });
-    toast.present();
+    await toast.present(); // Asegúrate de esperar a que se presente el toast
   }
 }

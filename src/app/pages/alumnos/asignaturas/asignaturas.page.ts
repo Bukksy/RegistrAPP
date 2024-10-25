@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { RedirectCommand, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { LoginService } from '../../../services/login.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-asignaturas',
@@ -7,9 +11,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AsignaturasPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private navCtrl: NavController,
+    private loginService: LoginService,
+    private menuCtrl: MenuController
+  ) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+
+  isProfileActive(): boolean {
+    return this.router.url === '/alumnos/asignaturas';
   }
 
+  logout() {
+    this.router.navigate(['/home']); 
+  }
+
+  back(){
+    console.log('volviendo atras...')
+
+    this.navCtrl.navigateRoot('/alumnos');
+  }
 }

@@ -1,16 +1,23 @@
 <ion-menu menuId="first-menu" side="end" contentId="main-content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>¡Hola <strong>{{username}}</strong>!</ion-title>
+      <ion-title>¡Bienvenido {{username}}!</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding" id="menu-main">
     <ion-list>
-      <ion-item routerLink="/alumnos/perfil">Perfil</ion-item>
-      <ion-item routerLink="/alumnos/asignaturas">Asignaturas</ion-item>
-      <ion-item routerLink="/alumnos/asistencia">Asistencia</ion-item>
+      <ion-item routerLink="/alumnos/perfil"><ion-icon size="large" aria-hidden="true" slot="start" name="person-circle-outline"></ion-icon>Perfil</ion-item>
+      <ion-item routerLink="/alumnos/asignaturas"><ion-icon size="large" aria-hidden="true" slot="start" name="school-outline"></ion-icon>Asignaturas</ion-item>
+      <ion-item routerLink="/alumnos/asistencia"><ion-icon size="large" aria-hidden="true" slot="start" name="book-outline"></ion-icon>Asistencia</ion-item>
     </ion-list>
   </ion-content>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button (click)="logoff()" fill="outline" shape="round">Logoff</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
 </ion-menu>
 
 <div class="ion-page" id="main-content">

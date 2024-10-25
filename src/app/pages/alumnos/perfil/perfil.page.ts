@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { RedirectCommand, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-perfil',
@@ -10,6 +12,8 @@ export class PerfilPage implements OnInit {
 
   constructor(
     private router: Router,
+    private navCtrl: NavController,
+    private menuCtrl: MenuController
   ) { }
 
   ngOnInit() {
@@ -17,6 +21,16 @@ export class PerfilPage implements OnInit {
 
   isProfileActive(): boolean {
     return this.router.url === '/alumnos/perfil';
+  }
+
+  logout() {
+    this.router.navigate(['/home']); 
+  }
+
+  back(){
+    console.log('volviendo atras...')
+
+    this.navCtrl.navigateRoot('/alumnos');
   }
 
 }

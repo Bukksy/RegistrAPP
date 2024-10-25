@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Animation, AnimationController } from '@ionic/angular';
 import { MenuController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class AlumnosPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private animationCtrl: AnimationController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private navCtrl: NavController
   ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if(state){
@@ -40,10 +42,9 @@ export class AlumnosPage implements OnInit {
   ngOnInit() {
   }
 
-  logoff(){
-    console.log('Cerrando Sesion...')
-
-    this.router.navigate(['/home'])
+  logoff() {
+    localStorage.removeItem('currentUser');
+    this.navCtrl.navigateRoot('/home');
   }
 
   ngAfterViewInit() {
@@ -76,5 +77,4 @@ export class AlumnosPage implements OnInit {
       console.log('Error en la animacion')
     }
   }
-
 }
