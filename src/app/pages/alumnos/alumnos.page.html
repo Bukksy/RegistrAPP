@@ -6,24 +6,9 @@
   </ion-header>
   <ion-content class="ion-padding" id="menu-main">
     <ion-list>
-      <a href="#">
-        <ion-item>
-          <ion-icon size="large" aria-hidden="true" slot="start" name="person-circle-outline"></ion-icon>
-          <ion-label>Perfil</ion-label>
-        </ion-item>
-      </a>
-      <a href="#">
-        <ion-item>
-          <ion-icon size="large" aria-hidden="true" slot="start" name="person-circle-outline"></ion-icon>
-          <ion-label>Asignaturas</ion-label>
-        </ion-item>
-      </a>
-      <a href="#">
-        <ion-item>
-          <ion-icon size="large" aria-hidden="true" slot="start" name="person-circle-outline"></ion-icon>
-          <ion-label>Tomar asistencia</ion-label>
-        </ion-item>
-      </a>
+      <ion-item routerLink="/alumnos/perfil">Perfil</ion-item>
+      <ion-item routerLink="/alumnos/asignaturas">Asignaturas</ion-item>
+      <ion-item routerLink="/alumnos/asistencia">Asistencia</ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>

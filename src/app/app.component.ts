@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { AlertController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,15 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private alertController: AlertController) {}
+  constructor(private alertController: AlertController, private platform: Platform) {
+    this.initializeApp();
+  }
+  
+  initializeApp() {
+    this.platform.ready().then(() => {
+      document.body.classList.remove('dark');
+    });
+  }
 
   async showAttendance() {
     const currentTime = formatDate(new Date(), 'shortTime', 'en-US');

@@ -29,12 +29,11 @@ export class AlumnosPage implements OnInit {
     }
   }
 
+  navigateTo(page: string) {
+    this.router.navigate([`alumnos/${page}`]);
+    }
+
   openFirstMenu() {
-    /**
-     * Open the menu by menu-id
-     * We refer to the menu using an ID
-     * because multiple "start" menus exist.
-     */
     this.menuCtrl.open('first-menu');
   }
 
@@ -77,4 +76,5 @@ export class AlumnosPage implements OnInit {
       console.log('Error en la animacion')
     }
   }
+
 }

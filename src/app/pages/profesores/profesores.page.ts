@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Animation, AnimationController } from '@ionic/angular';
-import { formatDate } from '@angular/common';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profesores',
@@ -16,7 +16,8 @@ export class ProfesoresPage implements OnInit {
   constructor(
     private router: Router,
     private alertController: AlertController,
-    private animationCtrl: AnimationController
+    private animationCtrl: AnimationController,
+    private menuCtrl: MenuController
   ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if(state){
@@ -28,12 +29,9 @@ export class ProfesoresPage implements OnInit {
   ngOnInit() {
   }
 
-  logoff(){
-    console.log('Cerrando Sesion...')
-
-    this.router.navigate(['/home'])
+  openFirstMenu() {
+    this.menuCtrl.open('first-menu');
   }
-
   ngAfterViewInit() {
     const bienvenida = document.querySelector('#bienvenida');
   
@@ -49,17 +47,6 @@ export class ProfesoresPage implements OnInit {
     } else {
       console.log('Error en la animacion')
     }
-  }
-
-  async showAttendance() {
-    const currentTime = formatDate(new Date(), 'shortTime', 'en-US');
-    const alert = await this.alertController.create({
-      header: 'Tomar Asistencia',
-      message: `Tomara asistencia a las: ${currentTime}`,
-      buttons: ['Generar QR'],
-    });
-
-    await alert.present();
   }
 
 }

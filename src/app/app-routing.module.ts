@@ -23,6 +23,18 @@ const routes: Routes = [
     path: 'forget',
     loadChildren: () => import('./pages/forget/forget.module').then( m => m.ForgetPageModule)
   },
+  {
+    path: 'alumnos/perfil',
+    loadChildren: () => import('./pages/alumnos/perfil/perfil.module').then(m => m.PerfilPageModule)
+  },
+  {
+    path: 'alumnos/asignaturas',
+    loadChildren: () => import('./pages/alumnos/asignaturas/asignaturas.module').then(m => m.AsignaturasPageModule)
+  },
+  {
+    path: 'alumnos/asistencia',
+    loadChildren: () => import('./pages/alumnos/asistencia/asistencia.module').then(m => m.AsistenciaPageModule)
+  },
 ];
 
 @NgModule({
