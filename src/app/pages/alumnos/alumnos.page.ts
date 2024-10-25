@@ -19,7 +19,7 @@ export class AlumnosPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private animationCtrl: AnimationController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
   ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if(state){
@@ -62,6 +62,7 @@ export class AlumnosPage implements OnInit {
     } else {
       console.log('Error en la animacion')
     }
+
 
     if (bienvenida2) {
       const animationbienvenida: Animation = this.animationCtrl.create()

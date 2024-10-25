@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 import { Animation, AnimationController } from '@ionic/angular';
 
 @Component({
@@ -20,10 +21,16 @@ export class HomePage {
     private router: Router, 
     private toastController: ToastController,
     private loginService: LoginService,
-    private animationCtrl: AnimationController
+    private animationCtrl: AnimationController,
+    private storage: Storage
   ) {
     this.tituloMain = 'RegistrAPP';
     this.welcomeMessage = 'Bienvenido';
+    this.init();
+  }
+
+  async init() {
+    await this.storage.create();
   }
 
   ngAfterViewInit() {
@@ -43,18 +50,19 @@ export class HomePage {
     }
   }
 
-  validateLogin() {
+  async validateLogin() {
     console.log("Ejecutando validación!");
 
-    // Cambiar aquí para obtener el resultado de validación, incluida la carrera
-    const loginResult = this.loginService.validateLogin(this.username, this.password);
+    const loginResult = await this.loginService.validateLogin(this.username, this.password);
 
-    if (loginResult.valid) { // Verifica si el inicio de sesión es válido
+    if (loginResult.valid) { 
       this.showToastMessage('Inicio de sesión válido', 'success');
       this.welcomeMessage = `Bienvenido ${this.username}`;
 
-      // Cambiar para pasar la carrera en los extras de navegación
       const extras = this.createExtrasUser(this.username, loginResult.carrera);
+
+
+      await this.storage.set('loggedUser', { username: this.username, carrera: loginResult.carrera });
 
       if (this.isAlumno()) {
         this.router.navigate(['/alumnos'], extras);
@@ -75,7 +83,7 @@ export class HomePage {
     return {
       state: {
         user: u,
-        carrera: carrera // Incluye la carrera aquí
+        carrera: carrera 
       }
     };
   }

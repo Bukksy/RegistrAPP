@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { formatDate } from '@angular/common';
-import { AlertController } from '@ionic/angular';
-import { Platform } from '@ionic/angular';
+import { AlertController, Platform, MenuController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-root',
@@ -9,21 +9,21 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private alertController: AlertController, private platform: Platform) {
-    this.initializeApp();
-  }
-  
-  initializeApp() {
-    this.platform.ready().then(() => {
-      document.body.classList.remove('dark');
-    });
+  userRole: string | null = null;
+
+  constructor(
+    private alertController: AlertController,
+    private platform: Platform,
+    private menu: MenuController,
+    private storage: Storage
+  ) {
   }
 
   async showAttendance() {
     const currentTime = formatDate(new Date(), 'shortTime', 'en-US');
     const alert = await this.alertController.create({
       header: 'Registrar Asistencia',
-      message: `La asistencia sera registrada a las: ${currentTime}`,
+      message: `La asistencia será registrada a las: ${currentTime}`,
       buttons: ['Escanear QR'],
     });
 
