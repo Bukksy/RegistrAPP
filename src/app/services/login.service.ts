@@ -47,18 +47,18 @@ export class LoginService {
     }
   ];
 
-  currentUser: { username: string; carrera?: string } | null = null;
+  currentUser: { username: string; carrera?: string, correo?: string } | null = null;
   currentUser2: { username: string; asignaturas?: Asignatura[] } | null = null;
 
   constructor() { }
 
-  validateLogin(u: string, p: string): { valid: boolean, carrera?: string, asignaturas?: Asignatura[] } {
+  validateLogin(u: string, p: string): { valid: boolean, carrera?: string, asignaturas?: Asignatura[], correo?: string} {
     const user = this.users.find(user => user.username === u && user.password === p);
     const profesor = this.profesores.find(prof => prof.username === u && prof.password === p);
 
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify({ username: u, carrera: user.carrera }));
-      return { valid: true, carrera: user.carrera };
+      return { valid: true, carrera: user.carrera, correo: user.correo };
     } else if (profesor) {
       // Almacena la información correcta en el LocalStorage
       localStorage.setItem('currentUser2', JSON.stringify({ username: u, asignaturas: profesor.asignaturas }));

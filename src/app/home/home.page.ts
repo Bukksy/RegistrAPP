@@ -13,6 +13,7 @@ export class HomePage {
   username: string = '';
   password: string = '';
   carrera: string = '';
+  correo: string = '';
   welcomeMessage: string;
   tituloMain: string;
 
@@ -24,15 +25,35 @@ export class HomePage {
   ) {
     this.tituloMain = 'RegistrAPP';
     this.welcomeMessage = 'Bienvenido';
+    
+    // Cargar datos de usuario si están en localStorage
+    this.loadUserData();
   }
 
   ngAfterViewInit() {
     this.animateForm();
   }
 
+  private loadUserData() {
+    // Cargar datos del usuario desde localStorage
+    const userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    
+    if (userData && userData.username) {
+        this.username = userData.username; // Cargar el username del localStorage
+        this.carrera = userData.carrera || ''; // Cargar la carrera si existe
+        this.correo = userData.correo || ''; // Cargar el correo si existe
+    } else {
+        // Reiniciar los datos si no hay información guardada
+        this.username = '';
+        this.carrera = '';
+        this.correo = '';
+    }
+}
+
+
   private animateForm() {
     const formulario = document.querySelector('#formulario');
-  
+
     if (formulario) {
       const animationFormulario: Animation = this.animationCtrl.create()
         .addElement(formulario)
@@ -40,7 +61,7 @@ export class HomePage {
         .easing('ease-in-out')
         .fromTo('opacity', '0', '1')
         .fromTo('transform', 'translateY(50px)', 'translateY(0px)');
-  
+
       animationFormulario.play();
     } else {
       console.log('Error en la animación');
@@ -52,28 +73,36 @@ export class HomePage {
 
     const loginResult = this.loginService.validateLogin(this.username, this.password);
 
-    if (loginResult.valid) { 
-      this.showToastMessage('Inicio de sesión válido', 'success');
-      this.welcomeMessage = `Bienvenido ${this.username}`; 
+    if (loginResult.valid) {
+        this.showToastMessage('Inicio de sesión válido', 'success');
+        this.welcomeMessage = `Bienvenido ${this.username}`; 
 
-      const userData = { username: this.username, carrera: loginResult.carrera };
-      localStorage.setItem('currentUser', JSON.stringify(userData));
+        const userData = { 
+            username: this.username,  // Este debe ser el username ingresado por el usuario
+            carrera: loginResult.carrera, 
+            correo: loginResult.correo 
+        };
 
-      const extras = this.createExtrasUser(this.username, loginResult.carrera);
+        // Guardar datos del usuario en localStorage
+        localStorage.setItem('currentUser', JSON.stringify(userData)); 
 
-      // Navegar según el tipo de usuario
-      if (this.isAlumno()) {
-        this.router.navigate(['/alumnos'], extras);
-      } else if (this.isProfesor()) {
-        this.router.navigate(['/profesores'], extras);
-      } else {
-        this.showToastMessage('Tipo de usuario no reconocido', 'danger');
-      }
+        // Crear objeto de navegación para pasar al siguiente componente
+        const extras = this.createExtrasUser(this.username, loginResult.carrera, [], loginResult.correo);
+
+        // Redirigir según el tipo de usuario
+        if (this.isAlumno()) {
+            this.router.navigate(['/alumnos'], extras);
+        } else if (this.isProfesor()) {
+            this.router.navigate(['/profesores'], extras);
+        } else {
+            this.showToastMessage('Tipo de usuario no reconocido', 'danger');
+        }
 
     } else {
-      this.showToastMessage('Inicio de sesión inválido', 'danger');
+        this.showToastMessage('Inicio de sesión inválido', 'danger');
     }
-  }
+}
+
 
   isAlumno(): boolean {
     return this.loginService.users.some(user => user.username === this.username);
@@ -83,12 +112,13 @@ export class HomePage {
     return this.loginService.profesores.some(user => user.username === this.username);
   }
 
-  createExtrasUser(u: string, carrera?: string, asignaturas?: string[]): NavigationExtras | undefined {
+  createExtrasUser(u: string, carrera?: string, asignaturas?: string[], correo?: string): NavigationExtras | undefined {
     return {
       state: {
         user: u,
         carrera: carrera,
-        asignaturas: asignaturas || []
+        asignaturas: asignaturas || [],
+        correo: correo
       }
     };
   }
@@ -105,6 +135,6 @@ export class HomePage {
       position: 'bottom',
       duration: 3000
     });
-    await toast.present(); // Asegúrate de esperar a que se presente el toast
+    await toast.present();
   }
 }

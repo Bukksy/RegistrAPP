@@ -8,7 +8,7 @@ const routes: Routes = [
     component: AlumnosPage,
     children: [
       {
-        path: 'inicio',  // Nueva ruta para el tab "Inicio"
+        path: 'inicio',  
         loadChildren: () => import('./alumnos.module').then(m => m.AlumnosPageModule) // Asumiendo que la lógica de alumnos está aquí
       },
       {
@@ -29,7 +29,8 @@ const routes: Routes = [
         pathMatch: 'full'
       }
     ]
-  }
+  },
+
 ];
 
 @NgModule({

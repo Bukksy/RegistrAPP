@@ -5,7 +5,7 @@ import { Animation, AnimationController } from '@ionic/angular';
 import { MenuController } from '@ionic/angular';
 import { LoginService } from '../../services/login.service';
 import { NavController } from '@ionic/angular';
-import { QrModalComponent } from '../../qr-modal/qr-modal.component';
+import { QrModalComponent } from '../../components/qr-modal/qr-modal.component';
 import { ModalController } from '@ionic/angular';
 import * as QRCode from 'qrcode';
 
