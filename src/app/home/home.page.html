@@ -8,9 +8,19 @@
 
 <ion-content [fullscreen]="true">
   <ion-header class="ion-text-center ion-no-border">
+    <!-- Agrega la ciudad y el clima -->
+    <h2 *ngIf="weatherData?.weather?.[0]?.description">{{ weatherData.weather[0].description }}</h2>
+    <p *ngIf="weatherData?.main?.temp">
+      <!-- Muestra la temperatura si está disponible -->
+      Temperatura: {{ weatherData.main.temp }} °C
+    </p>
+    <p *ngIf="weatherData?.main?.humidity">
+      <!-- Muestra la humedad si está disponible -->
+      Humedad: {{ weatherData.main.humidity }}%
+    </p>
   </ion-header>
 
-<br>
+  <br>
 
   <div id="container">
     <div id="formulario">

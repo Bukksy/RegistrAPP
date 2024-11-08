@@ -1,33 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { ToastController } from '@ionic/angular';
 import { Animation, AnimationController } from '@ionic/angular';
+import { WeatherService } from '../services/weather.service';  // Importa el WeatherService
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit, AfterViewInit { 
   username: string = '';
   password: string = '';
   carrera: string = '';
   correo: string = '';
   welcomeMessage: string;
   tituloMain: string;
+  weatherData: any;  
+  city: string = 'Santiago,CL';  // Ciudad predeterminada, puedes cambiarla dinámicamente
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private toastController: ToastController,
     private loginService: LoginService,
-    private animationCtrl: AnimationController
+    private animationCtrl: AnimationController,
+    private weatherService: WeatherService 
   ) {
     this.tituloMain = 'RegistrAPP';
     this.welcomeMessage = 'Bienvenido';
-    
-    // Cargar datos de usuario si están en localStorage
     this.loadUserData();
+  }
+
+  ngOnInit() {
+    this.getWeather(); 
   }
 
   ngAfterViewInit() {
@@ -35,21 +41,18 @@ export class HomePage {
   }
 
   private loadUserData() {
-    // Cargar datos del usuario desde localStorage
     const userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
     
     if (userData && userData.username) {
-        this.username = userData.username; // Cargar el username del localStorage
-        this.carrera = userData.carrera || ''; // Cargar la carrera si existe
-        this.correo = userData.correo || ''; // Cargar el correo si existe
+        this.username = userData.username; 
+        this.carrera = userData.carrera || '';
+        this.correo = userData.correo || ''; 
     } else {
-        // Reiniciar los datos si no hay información guardada
         this.username = '';
         this.carrera = '';
         this.correo = '';
     }
-}
-
+  }
 
   private animateForm() {
     const formulario = document.querySelector('#formulario');
@@ -78,18 +81,13 @@ export class HomePage {
         this.welcomeMessage = `Bienvenido ${this.username}`; 
 
         const userData = { 
-            username: this.username,  // Este debe ser el username ingresado por el usuario
+            username: this.username,  
             carrera: loginResult.carrera, 
             correo: loginResult.correo 
         };
-
-        // Guardar datos del usuario en localStorage
         localStorage.setItem('currentUser', JSON.stringify(userData)); 
-
-        // Crear objeto de navegación para pasar al siguiente componente
         const extras = this.createExtrasUser(this.username, loginResult.carrera, [], loginResult.correo);
 
-        // Redirigir según el tipo de usuario
         if (this.isAlumno()) {
             this.router.navigate(['/alumnos'], extras);
         } else if (this.isProfesor()) {
@@ -101,15 +99,14 @@ export class HomePage {
     } else {
         this.showToastMessage('Inicio de sesión inválido', 'danger');
     }
-}
-
-
-  isAlumno(): boolean {
-    return this.loginService.users.some(user => user.username === this.username);
   }
 
+  isAlumno(): boolean {
+    return this.loginService.users && this.loginService.users.some(user => user.username === this.username);
+  }
+  
   isProfesor(): boolean {
-    return this.loginService.profesores.some(user => user.username === this.username);
+    return this.loginService.profesores && this.loginService.profesores.some(user => user.username === this.username);
   }
 
   createExtrasUser(u: string, carrera?: string, asignaturas?: string[], correo?: string): NavigationExtras | undefined {
@@ -136,5 +133,18 @@ export class HomePage {
       duration: 3000
     });
     await toast.present();
+  }
+
+  getWeather() {
+    this.weatherService.getWeather(this.city).subscribe(
+      (data) => {
+        console.log('Datos del clima:', data);
+        this.weatherData = data;  // Almacena los datos del clima
+      },
+      (error) => {
+        console.error('Error al obtener el clima:', error);
+        this.showToastMessage('Error al obtener el clima', 'danger');
+      }
+    );
   }
 }
