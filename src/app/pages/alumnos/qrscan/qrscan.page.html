@@ -5,18 +5,21 @@
 </ion-header>
 
 <ion-content>
-  <div id="reader"></div>
+  <div id="contenido-principal">
+    <br>
+    <div id="reader"></div>
 
-  <div *ngIf="scannedData" class="ion-padding">
-    <h3>Resultado:</h3>
-    <p>{{ scannedData }}</p>
+    <div *ngIf="scannedData" class="ion-padding">
+      <h3>Resultado:</h3>
+      <p>{{ scannedData }}</p>
+    </div>
+
+    <div *ngIf="!scannedData" class="ion-padding">
+      <ion-spinner></ion-spinner>
+      <ion-text>Escaneando...</ion-text>
+    </div>
+
+    <ion-button (click)="startScanner()">Escanear nuevamente</ion-button>
+    <ion-button routerLink="/alumnos">Volver</ion-button>
   </div>
-
-  <div *ngIf="!scannedData" class="ion-padding">
-    <ion-spinner></ion-spinner>
-    <ion-text>Escaneando...</ion-text>
-  </div>
-
-  <ion-button (click)="startScanner()">Escanear nuevamente</ion-button>
-  <ion-button routerLink="/alumnos">Volver</ion-button>
 </ion-content>

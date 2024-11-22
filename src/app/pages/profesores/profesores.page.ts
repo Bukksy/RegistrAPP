@@ -8,6 +8,7 @@ import { NavController } from '@ionic/angular';
 import { QrModalComponent } from '../../components/qr-modal/qr-modal.component';
 import { ModalController } from '@ionic/angular';
 import * as QRCode from 'qrcode';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-profesores',
@@ -32,7 +33,8 @@ export class ProfesoresPage implements OnInit {
     private menuCtrl: MenuController,
     private loginService: LoginService,
     private navCtrl: NavController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private storageService: StorageService
   ) {
     const currentUser2 = JSON.parse(localStorage.getItem('currentUser2') || '{}');
 
@@ -140,7 +142,11 @@ export class ProfesoresPage implements OnInit {
   }
 
   logoff() {
-    localStorage.removeItem('currentUser2');
-    this.navCtrl.navigateRoot('/home');
+    // Limpia todos los datos del almacenamiento local y del servicio de almacenamiento
+    localStorage.clear();
+    this.storageService.clear();
+    this.router.navigate(['/home'], { replaceUrl: true }).then(() => {
+      window.location.reload();
+    });
   }
 }

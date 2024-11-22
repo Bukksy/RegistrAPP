@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'inicio',  
-        loadChildren: () => import('./alumnos.module').then(m => m.AlumnosPageModule) // Asumiendo que la lógica de alumnos está aquí
+        loadChildren: () => import('./inicio/inicio.module').then(m => m.InicioPageModule)
       },
       {
         path: 'perfil-alumno',
@@ -24,7 +24,7 @@ const routes: Routes = [
         loadChildren: () => import('./asistencia/asistencia.module').then(m => m.AsistenciaPageModule)
       },
       {
-        path: '',
+        path: 'inicio',
         redirectTo: 'perfil',
         pathMatch: 'full'
       }
@@ -34,6 +34,11 @@ const routes: Routes = [
     path: 'qrscan',
     loadChildren: () => import('./qrscan/qrscan.module').then(m => m.QrscanPageModule)
   },
+  {
+    path: 'inicio',
+    loadChildren: () => import('./inicio/inicio.module').then( m => m.InicioPageModule)
+  },
+
 
 
 ];

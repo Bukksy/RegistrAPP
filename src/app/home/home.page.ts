@@ -89,7 +89,7 @@ export class HomePage implements OnInit, AfterViewInit {
         const extras = this.createExtrasUser(this.username, loginResult.carrera, [], loginResult.correo);
 
         if (this.isAlumno()) {
-            this.router.navigate(['/alumnos'], extras);
+            this.router.navigate(['/alumnos/inicio'], extras);
         } else if (this.isProfesor()) {
             this.router.navigate(['/profesores'], extras);
         } else {

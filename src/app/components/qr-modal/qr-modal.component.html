@@ -8,7 +8,9 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="qrCodeUrl">
-    <img id="qr" [src]="qrCodeUrl" alt="Código QR" />
+  <div id="contenedor">
+    <div id="contenedorqr" *ngIf="qrCodeUrl">
+      <img id="qr" [src]="qrCodeUrl" alt="Código QR" />
+    </div>
   </div>
 </ion-content>

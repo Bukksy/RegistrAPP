@@ -65,6 +65,10 @@ export class AlumnosPage implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  asistencia(){
+    this.router.navigate(['/home']);
+  }
+
   ngAfterViewInit() {
     this.animateBienvenida('#bienvenida');
     this.animateBienvenida('.bienvenida');

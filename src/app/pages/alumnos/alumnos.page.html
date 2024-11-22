@@ -1,59 +1,30 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>RegistrAPP</ion-title>
-    <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <ion-title id="bienvenida" class="ion-text-center">¡Bienvenido nuevamente a RegistrAPP!</ion-title>
-    <br>
-    <div class="bienvenida" id="contenedor">
-      <div id="contenedor-hijo">
-        <ion-img id="imagen-profile" src="assets/img/pngegg (2).png" alt="Logo duoc"></ion-img>
-        <br>
-        <ion-title class="ion-text-center"><strong class="uppercase-text">{{username}}</strong>
-          <p>{{carrera}}</p>
-        </ion-title>
-        <ion-button [routerLink]="['/alumnos/qrscan']">Escanear Asistencia</ion-button>
-      </div>
-    </div>
-  </div>
-  
-
-</ion-content>
-
 <ion-tabs>
   <ion-tab-bar slot="bottom">
+    <!-- Tab de Inicio -->
     <ion-tab-button tab="inicio">
-      <ion-icon name="home-outline"></ion-icon> 
+      <ion-icon name="home-outline"></ion-icon>
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
 
+    <!-- Tab de Perfil -->
     <ion-tab-button tab="perfil-alumno">
       <ion-icon name="person-circle-outline"></ion-icon>
       <ion-label>Perfil</ion-label>
     </ion-tab-button>
 
+    <!-- Tab de Asignaturas -->
     <ion-tab-button tab="asignaturas">
       <ion-icon name="school-outline"></ion-icon>
       <ion-label>Asignaturas</ion-label>
     </ion-tab-button>
 
+    <!-- Tab de Asistencia -->
     <ion-tab-button tab="asistencia">
       <ion-icon name="book-outline"></ion-icon>
       <ion-label>Asistencia</ion-label>
     </ion-tab-button>
 
+    <!-- Tab de Logout -->
     <ion-tab-button (click)="logout()">
       <ion-icon name="log-out-outline"></ion-icon>
       <ion-label>Logout</ion-label>
