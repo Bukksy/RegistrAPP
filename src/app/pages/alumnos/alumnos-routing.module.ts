@@ -30,6 +30,11 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'qrscan',
+    loadChildren: () => import('./qrscan/qrscan.module').then(m => m.QrscanPageModule)
+  },
+
 
 ];
 
