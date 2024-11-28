@@ -1,3 +1,5 @@
+
+
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>RegistrAPP</ion-title>
@@ -20,4 +22,29 @@
       <ion-title size="large">blank</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div id="container">
+    <ion-title id="bienvenida" class="ion-text-center">¡Bienvenido nuevamente a tu Perfil!</ion-title>
+    <ion-list>
+      <ion-item>
+        <ion-avatar aria-hidden="true" slot="start">
+          <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg"/>
+        </ion-avatar>
+        <p><strong>Nombre:</strong> {{username}}</p>
+      </ion-item>
+      <ion-item>
+        <ion-avatar aria-hidden="true" slot="start">
+          <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg"/>
+        </ion-avatar>
+        <p><strong>Carrera:</strong> {{carrera}}</p>
+      </ion-item>
+      <ion-item>
+        <ion-avatar aria-hidden="true" slot="start">
+          <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg"/>
+        </ion-avatar>
+        <p><strong>Correo:</strong> {{correo}}</p>
+      </ion-item>
+    </ion-list>
+  </div>
+
 </ion-content>

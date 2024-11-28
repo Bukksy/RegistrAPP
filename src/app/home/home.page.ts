@@ -1,41 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { Animation, AnimationController } from '@ionic/angular';
+import { WeatherService } from '../services/weather.service';  // Importa el WeatherService
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit, AfterViewInit { 
   username: string = '';
   password: string = '';
+  carrera: string = '';
+  correo: string = '';
   welcomeMessage: string;
-
   tituloMain: string;
+  weatherData: any;  
+  city: string = 'Santiago,CL';  // Ciudad predeterminada, puedes cambiarla dinámicamente
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private toastController: ToastController,
     private loginService: LoginService,
-    private animationCtrl: AnimationController,
-    private storage: Storage
+    private animationCtrl: AnimationController
   ) {
     this.tituloMain = 'RegistrAPP';
     this.welcomeMessage = 'Bienvenido';
-    this.init();
-  }
-
-  async init() {
-    await this.storage.create();
   }
 
   ngAfterViewInit() {
+    this.animateForm();
+  }
+
+  private loadUserData() {
+    const userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    
+    if (userData && userData.username) {
+        this.username = userData.username; 
+        this.carrera = userData.carrera || '';
+        this.correo = userData.correo || ''; 
+    } else {
+        this.username = '';
+        this.carrera = '';
+        this.correo = '';
+    }
+  }
+
+  private animateForm() {
     const formulario = document.querySelector('#formulario');
-  
+
     if (formulario) {
       const animationFormulario: Animation = this.animationCtrl.create()
         .addElement(formulario)
@@ -43,7 +59,7 @@ export class HomePage {
         .easing('ease-in-out')
         .fromTo('opacity', '0', '1')
         .fromTo('transform', 'translateY(50px)', 'translateY(0px)');
-  
+
       animationFormulario.play();
     } else {
       console.log('Error en la animación');
@@ -53,16 +69,15 @@ export class HomePage {
   async validateLogin() {
     console.log("Ejecutando validación!");
 
-    const loginResult = await this.loginService.validateLogin(this.username, this.password);
+    // Cambiar aquí para obtener el resultado de validación, incluida la carrera
+    const loginResult = this.loginService.validateLogin(this.username, this.password);
 
-    if (loginResult.valid) { 
+    if (loginResult.valid) { // Verifica si el inicio de sesión es válido
       this.showToastMessage('Inicio de sesión válido', 'success');
       this.welcomeMessage = `Bienvenido ${this.username}`;
 
+      // Cambiar para pasar la carrera en los extras de navegación
       const extras = this.createExtrasUser(this.username, loginResult.carrera);
-
-
-      await this.storage.set('loggedUser', { username: this.username, carrera: loginResult.carrera });
 
       if (this.isAlumno()) {
         this.router.navigate(['/alumnos'], extras);
@@ -71,19 +86,23 @@ export class HomePage {
       }
 
     } else {
-      this.showToastMessage('Inicio de sesión inválido', 'danger');
+        this.showToastMessage('Inicio de sesión inválido', 'danger');
     }
   }
 
   isAlumno(): boolean {
-    return this.loginService.users.some(user => user.username === this.username);
+    return this.loginService.users && this.loginService.users.some(user => user.username === this.username);
+  }
+  
+  isProfesor(): boolean {
+    return this.loginService.profesores && this.loginService.profesores.some(user => user.username === this.username);
   }
 
-  createExtrasUser(u: string, carrera?: string): NavigationExtras | undefined {
+  createExtrasUser(u: string, carrera?: string, asignaturas?: string[], correo?: string): NavigationExtras | undefined {
     return {
       state: {
         user: u,
-        carrera: carrera 
+        carrera: carrera // Incluye la carrera aquí
       }
     };
   }
@@ -100,6 +119,19 @@ export class HomePage {
       position: 'bottom',
       duration: 3000
     });
-    toast.present();
+    await toast.present();
+  }
+
+  getWeather() {
+    this.weatherService.getWeather(this.city).subscribe(
+      (data) => {
+        console.log('Datos del clima:', data);
+        this.weatherData = data;  // Almacena los datos del clima
+      },
+      (error) => {
+        console.error('Error al obtener el clima:', error);
+        this.showToastMessage('Error al obtener el clima', 'danger');
+      }
+    );
   }
 }

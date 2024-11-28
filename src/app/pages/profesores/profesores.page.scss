@@ -1,8 +1,11 @@
 #container {
-    margin: 170px;
+    margin: 150px;
     display: grid;
     justify-content: center;
     align-items: center;
+    height: auto;
+
+    transition: height 0.3s ease; 
   }
   
   #tituloMain{
@@ -34,16 +37,21 @@
   
   #imagen-profile{
     width: 130px;
-    margin-left: 10px;
     margin-top: 50px;
     opacity:calc(0.3);
     filter: drop-shadow(1px 1px 4px orange);
+  }
+
+  .imagenes{
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
   }
   
   #contenedor{
     box-shadow: 1px 1px 10px black;
     border-radius: 20px;
-    height: 400px;
   
     padding: 10px;
   }
@@ -56,4 +64,16 @@
     display: grid;
     justify-content: center;
     align-items: center;
+  }
+
+  .opcion-seleccionada{
+    margin-left: 30px;
+    margin-top: 10px;
+    text-align: center;
+
+    box-shadow: 0ch 0px 4px black;
+    border-radius: 20px;
+    width: 250px;
+
+    padding: 10px;
   }
