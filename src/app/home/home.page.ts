@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { ToastController } from '@ionic/angular';
-import { Storage } from '@ionic/storage-angular';
 import { Animation, AnimationController } from '@ionic/angular';
 import { WeatherService } from '../services/weather.service';  // Importa el WeatherService
 
@@ -25,10 +24,16 @@ export class HomePage implements OnInit, AfterViewInit {
     private router: Router,
     private toastController: ToastController,
     private loginService: LoginService,
-    private animationCtrl: AnimationController
+    private animationCtrl: AnimationController,
+    private weatherService: WeatherService 
   ) {
     this.tituloMain = 'RegistrAPP';
     this.welcomeMessage = 'Bienvenido';
+    this.loadUserData();
+  }
+
+  ngOnInit() {
+    this.getWeather(); 
   }
 
   ngAfterViewInit() {
@@ -66,24 +71,30 @@ export class HomePage implements OnInit, AfterViewInit {
     }
   }
 
-  async validateLogin() {
+  validateLogin() {
     console.log("Ejecutando validación!");
 
-    // Cambiar aquí para obtener el resultado de validación, incluida la carrera
     const loginResult = this.loginService.validateLogin(this.username, this.password);
 
-    if (loginResult.valid) { // Verifica si el inicio de sesión es válido
-      this.showToastMessage('Inicio de sesión válido', 'success');
-      this.welcomeMessage = `Bienvenido ${this.username}`;
+    if (loginResult.valid) {
+        this.showToastMessage('Inicio de sesión válido', 'success');
+        this.welcomeMessage = `Bienvenido ${this.username}`; 
 
-      // Cambiar para pasar la carrera en los extras de navegación
-      const extras = this.createExtrasUser(this.username, loginResult.carrera);
+        const userData = { 
+            username: this.username,  
+            carrera: loginResult.carrera, 
+            correo: loginResult.correo 
+        };
+        localStorage.setItem('currentUser', JSON.stringify(userData)); 
+        const extras = this.createExtrasUser(this.username, loginResult.carrera, [], loginResult.correo);
 
-      if (this.isAlumno()) {
-        this.router.navigate(['/alumnos'], extras);
-      } else {
-        this.router.navigate(['/profesores'], extras);
-      }
+        if (this.isAlumno()) {
+            this.router.navigate(['/alumnos/inicio'], extras);
+        } else if (this.isProfesor()) {
+            this.router.navigate(['/profesores'], extras);
+        } else {
+            this.showToastMessage('Tipo de usuario no reconocido', 'danger');
+        }
 
     } else {
         this.showToastMessage('Inicio de sesión inválido', 'danger');
@@ -102,7 +113,9 @@ export class HomePage implements OnInit, AfterViewInit {
     return {
       state: {
         user: u,
-        carrera: carrera // Incluye la carrera aquí
+        carrera: carrera,
+        asignaturas: asignaturas || [],
+        correo: correo
       }
     };
   }

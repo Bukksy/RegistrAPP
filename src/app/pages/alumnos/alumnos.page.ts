@@ -21,7 +21,7 @@ export class AlumnosPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private animationCtrl: AnimationController,
-    private menuCtrl: MenuController,,
+    private menuCtrl: MenuController,
     private navCtrl: NavController,
     private loginService: LoginService,
     private storageService: StorageService
@@ -87,21 +87,7 @@ export class AlumnosPage implements OnInit {
   
       animationbienvenida.play();
     } else {
-      console.log('Error en la animacion')
-    }
-
-    if (bienvenida2) {
-      const animationbienvenida: Animation = this.animationCtrl.create()
-        .addElement(bienvenida2)
-        .duration(1000)
-        .easing('ease-in-out')
-        .fromTo('opacity', '0', '1')
-        .fromTo('transform', 'translateY(50px)', 'translateY(0px)');
-  
-      animationbienvenida.play();
-    } else {
-      console.log('Error en la animacion')
+      console.log(`Error en la animación para ${selector}`);
     }
   }
-
 }
