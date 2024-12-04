@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title style="text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">RegistrAPP</ion-title>
+    <ion-title style="text-align: center; font-family:'Titulos'; font-size: 30px;">RegistrAPP</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -13,20 +13,28 @@
       <ion-title size="large">blank</ion-title>
     </ion-toolbar>
   </ion-header>
-
+  
   <div id="container">
-    <ion-title id="bienvenida" class="ion-text-center" style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">¡Bienvenido nuevamente a RegistrAPP!</ion-title>
+    <ion-title id="bienvenida" class="ion-text-center" style="font-family: 'Titulos'; font-size: 25px;">¡Bienvenido nuevamente a RegistrAPP!</ion-title>
     <br>
-    <div class="bienvenida" id="contenedor">
-      <div id="contenedor-hijo">
-        <ion-img id="imagen-profile" src="assets/img/pngegg (2).png" alt="Logo duoc"></ion-img>
+
+    <div class="e-card playing" >
+      <div class="image"></div>
+    
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+    
+      <div class="infotop" style="padding: 30px;">
+        <img src="../assets/img/pngegg (2).png" alt="logo profile" style="width: 100px;">
         <br>
-        <ion-title class="ion-text-center"><strong class="uppercase-text">{{username}}</strong>
-          <p>{{carrera}}</p>
-        </ion-title>
-        <ion-button class="botones" color="warning" size="default" shape="round" style="height: 60px;" (click)="openScanner()">Escanear Asistencia</ion-button>
+        {{username}}
+        <br>
+        <div class="name">
+          {{carrera}}
+        </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </ion-content>

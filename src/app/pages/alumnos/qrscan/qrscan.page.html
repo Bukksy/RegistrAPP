@@ -14,12 +14,16 @@
       <p>{{ scannedData }}</p>
     </div>
 
-    <div *ngIf="!scannedData" class="ion-padding">
+    <div *ngIf="!scannedData && isScanning" class="ion-padding">
       <ion-spinner></ion-spinner>
       <ion-text>Escaneando...</ion-text>
     </div>
 
-    <ion-button (click)="startScanner()">Escanear nuevamente</ion-button>
-    <ion-button routerLink="/alumnos">Volver</ion-button>
+    <div *ngIf="!isScanning && !scannedData" class="ion-padding">
+      <ion-text>El escáner está en pausa. Presiona "Escanear nuevamente" para reanudar.</ion-text>
+    </div>
+
+    <ion-button (click)="startScanner()" [disabled]="isScanning">Escanear nuevamente</ion-button>
+    <ion-button (click)="stopScanner()" [disabled]="!isScanning">Pausar Escaneo</ion-button>
   </div>
 </ion-content>

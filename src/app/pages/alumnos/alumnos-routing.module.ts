@@ -24,23 +24,16 @@ const routes: Routes = [
         loadChildren: () => import('./asistencia/asistencia.module').then(m => m.AsistenciaPageModule)
       },
       {
-        path: 'inicio',
-        redirectTo: 'perfil',
+        path: 'qrscan',
+        loadChildren: () => import('./qrscan/qrscan.module').then(m => m.QrscanPageModule),
+      },
+      {
+        path: '',
+        redirectTo: 'inicio',
         pathMatch: 'full'
       }
     ]
   },
-  {
-    path: 'qrscan',
-    loadChildren: () => import('./qrscan/qrscan.module').then(m => m.QrscanPageModule)
-  },
-  {
-    path: 'inicio',
-    loadChildren: () => import('./inicio/inicio.module').then( m => m.InicioPageModule)
-  },
-
-
-
 ];
 
 @NgModule({

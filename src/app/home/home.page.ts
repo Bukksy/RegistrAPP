@@ -3,7 +3,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { ToastController } from '@ionic/angular';
 import { Animation, AnimationController } from '@ionic/angular';
-import { WeatherService } from '../services/weather.service';  // Importa el WeatherService
+import { WeatherService } from '../services/weather.service'; 
 
 @Component({
   selector: 'app-home',
@@ -18,7 +18,7 @@ export class HomePage implements OnInit, AfterViewInit {
   welcomeMessage: string;
   tituloMain: string;
   weatherData: any;  
-  city: string = 'Santiago,CL';  // Ciudad predeterminada, puedes cambiarla dinámicamente
+  city: string = 'Santiago,CL';
 
   constructor(
     private router: Router,
