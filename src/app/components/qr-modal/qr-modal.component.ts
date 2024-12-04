@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular'; // Cambiado a ModalController
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-qr-modal',
@@ -8,11 +8,13 @@ import { ModalController } from '@ionic/angular'; // Cambiado a ModalController
 })
 export class QrModalComponent {
   @Input() qrCodeUrl: string | null = null;
+  @Input() asignaturaName: string | null = null;
+  @Input() seccion: string | null = null;
+  @Input() sala: string | null = null;
 
-  constructor(private modalController: ModalController) {} // Cambiado a ModalController
+  constructor(private modalController: ModalController) {}
 
   closeModal() {
-    console.log('Cerrando el modal...');
-    this.modalController.dismiss(); 
+    this.modalController.dismiss();
   }
 }

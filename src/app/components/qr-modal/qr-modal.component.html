@@ -12,5 +12,11 @@
     <div id="contenedorqr" *ngIf="qrCodeUrl">
       <img id="qr" [src]="qrCodeUrl" alt="Código QR" />
     </div>
+    <div id="detalles" *ngIf="asignaturaName || seccion || sala">
+      <h2>Detalles de la Asignatura</h2>
+      <p *ngIf="asignaturaName"><strong>Asignatura:</strong> {{ asignaturaName }}</p>
+      <p *ngIf="seccion"><strong>Sección:</strong> {{ seccion }}</p>
+      <p *ngIf="sala"><strong>Sala:</strong> {{ sala }}</p>
+    </div>
   </div>
 </ion-content>

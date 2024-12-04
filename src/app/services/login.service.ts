@@ -20,9 +20,9 @@ export class LoginService {
       password: '12345', 
       correo: "example@duoc.cl", 
       asignaturas: [ 
-        { name: 'C. Software', button: 'Generar QR', content: 'QR para C. Software' },
-        { name: 'Arquitectura', button: 'Generar QR', content: 'QR para Arquitectura' },
-        { name: 'Programación', button: 'Generar QR', content: 'QR para Programación' }
+        { name: 'C. Software', button: 'Generar QR', content: 'QR para C. Software', seccion: '020V', sala: 'LC01' },
+        { name: 'Arquitectura', button: 'Generar QR', content: 'QR para Arquitectura', seccion: '020V', sala: 'LC01' },
+        { name: 'Programación', button: 'Generar QR', content: 'QR para Programación', seccion: '020V', sala: 'LC01' }
       ]
     },
     { 
@@ -30,9 +30,9 @@ export class LoginService {
       password: '12345', 
       correo: "example@duoc.cl", 
       asignaturas: [ 
-        { name: 'C. Software', button: 'Generar QR', content: 'QR para Arquitectura' },
-        { name: 'Arquitectura', button: 'Generar QR', content: 'QR para Portafolio' },
-        { name: 'Programación', button: 'Generar QR', content: 'QR para Ingeniería' }
+        { name: 'C. Software', button: 'Generar QR', content: 'QR para Arquitectura', seccion: '020V', sala: 'LC01' },
+        { name: 'Arquitectura', button: 'Generar QR', content: 'QR para Portafolio', seccion: '020V', sala: 'LC01' },
+        { name: 'Programación', button: 'Generar QR', content: 'QR para Ingeniería', seccion: '020V', sala: 'LC01' }
       ]
     },
     { 
@@ -40,12 +40,13 @@ export class LoginService {
       password: '12345', 
       correo: "example@duoc.cl", 
       asignaturas: [ 
-        { name: 'Modelamiento', button: 'Generar QR', content: 'QR para Modelamiento' },
-        { name: 'BPM', button: 'Generar QR', content: 'QR para BPM' },
-        { name: 'Seguridad', button: 'Generar QR', content: 'QR para Seguridad' }
+        { name: 'Modelamiento', button: 'Generar QR', content: 'QR para Modelamiento', seccion: '020V', sala: 'LC01' },
+        { name: 'BPM', button: 'Generar QR', content: 'QR para BPM', seccion: '020V', sala: 'LC01' },
+        { name: 'Seguridad', button: 'Generar QR', content: 'QR para Seguridad', seccion: '020V', sala: 'LC01' }
       ]
     }
-  ];
+];
+
 
   currentUser: { username: string; carrera?: string, correo?: string } | null = null;
   currentUser2: { username: string; asignaturas?: Asignatura[] } | null = null;
@@ -60,7 +61,6 @@ export class LoginService {
       localStorage.setItem('currentUser', JSON.stringify({ username: u, carrera: user.carrera }));
       return { valid: true, carrera: user.carrera, correo: user.correo };
     } else if (profesor) {
-      // Almacena la información correcta en el LocalStorage
       localStorage.setItem('currentUser2', JSON.stringify({ username: u, asignaturas: profesor.asignaturas }));
       return { valid: true, asignaturas: profesor.asignaturas };
     }

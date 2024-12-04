@@ -16,4 +16,6 @@ export class Asignatura{
     name!: string;
     button!: string;
     content!: string;
+    seccion!: string;
+    sala!: string;
 }
