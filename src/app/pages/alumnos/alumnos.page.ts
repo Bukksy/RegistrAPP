@@ -57,9 +57,27 @@ export class AlumnosPage implements OnInit {
       this.carrera = userData.carrera || 'Carrera no especificada';
     }
   }
+
+  async confirmarlogout() {
+    const alert = await this.alertController.create({
+      header: 'Cierre de sesion',
+      message: '¿Está seguro que desea cerrar sesión?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+        },
+        {
+          text: 'Sí',
+          handler: () => this.logout(),
+        },
+      ],
+    });
+
+    await alert.present();
+  }
   
   logout() {
-    // Limpia todos los datos del almacenamiento local y del servicio de almacenamiento
     localStorage.clear();
     this.storageService.clear();
     this.router.navigate(['/home'], { replaceUrl: true }).then(() => {

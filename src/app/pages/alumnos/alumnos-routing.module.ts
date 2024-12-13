@@ -24,10 +24,6 @@ const routes: Routes = [
         loadChildren: () => import('./asistencia/asistencia.module').then(m => m.AsistenciaPageModule)
       },
       {
-        path: 'qrscan',
-        loadChildren: () => import('./qrscan/qrscan.module').then(m => m.QrscanPageModule),
-      },
-      {
         path: '',
         redirectTo: 'inicio',
         pathMatch: 'full'

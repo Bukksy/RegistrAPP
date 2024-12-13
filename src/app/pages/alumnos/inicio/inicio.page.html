@@ -31,13 +31,16 @@
         {{username}}
         <br>
         <div class="name">
-          {{carrera}}
-          <ion-tab-button tab="qrscan">
-            <ion-icon name="scan-outline"></ion-icon>
-            <ion-label>Scannear
-            </ion-label>
-          </ion-tab-button>
+          {{carrera}}  
         </div>
+        <br>
+        <br>
+        <br>
+        <ion-fab slot="fixed" vertical="bottom" horizontal="center">
+            <ion-fab-button (click)="scan()">
+              <ion-icon name="qr-code-outline"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
       </div>
     </div>
 

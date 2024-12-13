@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { LoginService } from '../../../services/login.service';
 import { StorageService } from '../../../services/storage.service';
 import { ModalController } from '@ionic/angular';
-import { QrscanPage } from '../qrscan/qrscan.page';
+import {QrScannerService} from "../../../services/qr-scanner-service.service"; 
 
 @Component({
   selector: 'app-inicio',
@@ -19,7 +19,8 @@ export class InicioPage implements OnInit {
     private router: Router,
     private loginService: LoginService,
     private storageService: StorageService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private readonly qrScannerService: QrScannerService
   ) { 
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state) {
@@ -52,10 +53,7 @@ export class InicioPage implements OnInit {
     }
   }
 
-  async openScanner() {
-    const modal = await this.modalController.create({
-      component: QrscanPage
-    });
-    return await modal.present();
+  async scan(): Promise<void> {
+    const barcodes = await this.qrScannerService.scan() 
   }
 }

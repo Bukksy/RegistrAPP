@@ -46,8 +46,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { userType: 'alumno' }
   },
-  { path: 'alumnos/qrscan', 
-    loadChildren: () => import('./pages/alumnos/qrscan/qrscan.module').then(m => m.QrscanPageModule) },
   {
     path: '404',
     loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)

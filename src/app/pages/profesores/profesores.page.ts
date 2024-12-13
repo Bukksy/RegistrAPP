@@ -22,10 +22,6 @@ export class ProfesoresPage implements OnInit {
   opcionSeleccionada: { name: string; button: string; content: string } | null = null;
   qrCodeUrl: string = '';
 
-  mostrarBotones(asignatura: { name: string; button: string; content: string }) {
-    this.opcionSeleccionada = asignatura;
-  }
-
   constructor(
     private router: Router,
     private alertController: AlertController,
@@ -41,8 +37,14 @@ export class ProfesoresPage implements OnInit {
     if (currentUser2) {
       this.username = currentUser2.username || 'Usuario no especificado';
       this.asignaturas = Array.isArray(currentUser2.asignaturas) ? currentUser2.asignaturas : [];
-      console.log(`Asignaturas: ${JSON.stringify(this.asignaturas)}`); 
+      console.log(`Asignaturas: ${JSON.stringify(this.asignaturas)}`);
     }
+  }
+
+  ngOnInit() {}
+
+  mostrarBotones(asignatura: { name: string; button: string; content: string }) {
+    this.opcionSeleccionada = asignatura;
   }
 
   async presentQrModal() {
@@ -99,8 +101,16 @@ export class ProfesoresPage implements OnInit {
 
     await alert.present();
   }
-  
-  ngOnInit() {}
+
+  // Método para obtener asignaturas formateadas
+  obtenerAsignaturasFormateadas(): string[] {
+    const fechaActual = new Date().toLocaleDateString('es-CL'); // Formato de fecha actual
+    return this.asignaturas.map(asignatura => {
+      const seccion = '020V'; // Suponiendo una sección fija
+      const sala = 'LC01';   // Suponiendo una sala fija
+      return `${asignatura.name}|${seccion}|${sala}|${fechaActual}`;
+    });
+  }
 
   openFirstMenu() {
     this.menuCtrl.open('first-menu');
