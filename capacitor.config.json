@@ -1,1 +1,13 @@
-{}
+{
+    "appId":"com.RegistrAPP.app",
+    "appName":"RegistrAPP",
+    "webDir":"www",
+    "bundledWebRuntime": false,
+    "plugins":{
+        "BarcodeScanner":{
+            "android":{
+                "cameraUsageDescription":"Se requiere acceso a la camara para escanear qr"
+            }
+        }
+    }
+}

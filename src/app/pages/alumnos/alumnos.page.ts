@@ -59,10 +59,12 @@ export class AlumnosPage implements OnInit {
   }
   
   logout() {
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('currentUser2');
+    // Limpia todos los datos del almacenamiento local y del servicio de almacenamiento
+    localStorage.clear();
     this.storageService.clear();
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home'], { replaceUrl: true }).then(() => {
+      window.location.reload();
+    });
   }
 
   asistencia(){
