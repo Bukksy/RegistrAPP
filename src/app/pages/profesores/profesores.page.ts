@@ -58,19 +58,26 @@ export class ProfesoresPage implements OnInit {
     return await modal.present();
   }
 
-  generarQRCode(hora: string) {
+  generarQRCode() {
     if (this.opcionSeleccionada) {
-      const data = `Se registra asistencia a: ${this.opcionSeleccionada.name} a la hora: ${hora}`;
-      QRCode.toDataURL(data)
-        .then(async url => {
-          this.qrCodeUrl = url;
-          await this.presentQrModal();
-        })
-        .catch(err => {
-          console.error(err);
-        });
+      const asignaturaFormateada = this.obtenerAsignaturasFormateadas()
+        .find(asignatura => asignatura.includes(this.opcionSeleccionada!.name));
+  
+      if (asignaturaFormateada) {
+        QRCode.toDataURL(asignaturaFormateada)
+          .then(async url => {
+            this.qrCodeUrl = url;
+            await this.presentQrModal();
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      } else {
+        console.error('No se encontró información formateada para la asignatura seleccionada.');
+      }
     }
   }
+  
 
   async confirmarAsistencia() {
     const HoraActual = new Date(); 
@@ -93,7 +100,7 @@ export class ProfesoresPage implements OnInit {
         {
           text: 'Sí',
           handler: async () => {
-            this.generarQRCode(formattedTime);
+            this.generarQRCode();
           },
         },
       ],

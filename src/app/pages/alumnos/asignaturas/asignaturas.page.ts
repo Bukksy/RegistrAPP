@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { LoginService } from '../../../services/login.service';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-asignaturas',
@@ -8,28 +7,29 @@ import { LoginService } from '../../../services/login.service';
   styleUrls: ['./asignaturas.page.scss'],
 })
 export class AsignaturasPage implements OnInit {
-  username: string = 'Invitado';
-  asignaturas: any[] = []; // Cambia el tipo según tu modelo de asignaturas
-  carrera: string = 'Carrera no especificada';
 
-  constructor(private router: Router, private loginService: LoginService) { 
-    this.initializeUserData();
-  }
+  asignaturas: string[] = [];
+
+  constructor(private storageService: StorageService) {}
 
   ngOnInit() {
-    // Aquí podrías cargar información adicional si lo necesitas
+    this.loadAsignaturas();
   }
 
-  private initializeUserData() {
-    const currentUser = localStorage.getItem('currentUser');
-    const currentUser2 = localStorage.getItem('currentUser2');
-
-    if (currentUser) {
-      const user = JSON.parse(currentUser);
-      this.username = user.username || 'Usuario no encontrado';
-      this.carrera = user.carrera || 'Carrera no especificada';
-    } else {
-      this.router.navigate(['/home']); // Redirige si no hay usuario logueado
+  async loadAsignaturas() {
+    try {
+      const storedAsignaturas = await this.storageService.get('qrDataList') as string[];
+      if (storedAsignaturas && storedAsignaturas.length > 0) {
+        this.asignaturas = storedAsignaturas.map(asignatura => asignatura.trim());
+      } else {
+        this.asignaturas = [];
+      }
+    } catch (error) {
+      console.error('Error al cargar asignaturas:', error);
     }
+  }
+
+  verMas(asignatura: string) {
+    console.log('Ver más detalles de:', asignatura);
   }
 }
